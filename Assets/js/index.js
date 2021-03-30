@@ -11,22 +11,41 @@ function criaCalculadora() {
             console.log(this.form);
         },
         tamanhoVet(){
-            console.log();
             let tam = document.createElement('select');
             tam.classList.add("tam");
-            let t = new Array();
             for(i=0;i<10;i++){
                 let a = document.createElement('option');
                 a.attributes.value=i;
                 a.text = i+2;
-                t.push(a);
-                tam.appendChild(t[i]);
+                tam.appendChild(a);
             }
             this.form.appendChild(tam);
             let btn =  document.createElement('button');
             btn.textContent = 'Tamanho';
             btn.classList.add('btn-tam');
             this.form.appendChild(btn);
+        },
+        alocaTamVet(tamanho){
+            let brk = document.createElement('br');
+            let entrada= document.createElement('form');
+            entrada.classList.add('entrada');
+            entrada.appendChild(brk);
+            for(i=0;i<tamanho;i++){
+                
+                let vet1 = document.createElement('input');
+                vet1.id = i;
+                entrada.appendChild(vet1);
+            }
+            entrada.appendChild(brk);
+            for(i=0;i<tamanho;i++){
+                let vet2 = document.createElement('input');
+                vet2.id = tamanho+i;
+                entrada.appendChild(vet2);
+            }
+            console.log(entrada);
+            this.form.appendChild(entrada);
+
+            
         },
         normavet(tamanho) {
             console.log(tamanho);
@@ -51,6 +70,7 @@ function criaCalculadora() {
                 if (evntrgt.classList.contains('btn-tam')){
                     let op = this.oper.value;
                     let tamanho = document.querySelector('.tam');
+                    this.alocaTamVet(tamanho.value);
                     operacoes[op](tamanho.value);
                     
                 }
