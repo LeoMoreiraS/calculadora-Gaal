@@ -10,7 +10,7 @@ function criaCalculadora() {
             this.clickDoBotao(operacoes);
         },
         tamanhoVet(){
-            let existe = document.querySelector(".tam");
+            let existe = this.form.querySelector(".tam");
             if(existe==null){
                 let tam = document.createElement('div');
                 let sel = document.createElement('select');
@@ -26,18 +26,22 @@ function criaCalculadora() {
                 let btn =  document.createElement('button');
                 btn.textContent = 'Tamanho';
                 btn.classList.add('btn-tam');
+                btn.classList.add('btn');
+                btn.classList.add('btn-primary');
                 tam.appendChild(btn);
                 this.form.appendChild(tam);
             }else{
                 existe.remove();
+                this.tamanhoVet();
             }
         },
         alocaTamVet(tamanho){
             
-            let tam =document.querySelector(".tam");
-            let existe = document.querySelector('.entrada');
+            let tam =this.form.querySelector(".tam");
+            let existe = tam.querySelector('.entrada');
             if(existe==null && tam!=null){
 
+                
                 let brk = document.createElement('br');
                 let entrada= document.createElement('form');
                 entrada.classList.add('entrada');
@@ -54,19 +58,25 @@ function criaCalculadora() {
                     vet2.id = tamanho+i;
                     entrada.appendChild(vet2);
                 }
-                //console.log(entrada);
+                let butao = document.createElement('button');
+                butao.classList.add('btn-calc');
+                butao.classList.add('btn');
+                butao.classList.add('btn-primary');
+                butao.textContent='Calcular'
+                entrada.appendChild(butao);
                 tam.appendChild(entrada);
             }else{
                 existe.remove();
+                this.alocaTamVet(tamanho);
             }
 
             
         },
-        normavet(tamanho) {
-            console.log(tamanho);
+        normavet(tamanho,op) {
+            console.log(tamanho + ' ' + op);
         },
-        prodVet(tamanho) {
-            console.log(tamanho);
+        prodVet(tamanho,op) {
+            console.log(tamanho + ' ' + op);
         },
 
         clickDoBotao(operacoes) {
@@ -84,11 +94,16 @@ function criaCalculadora() {
                     
                 }
                 if (evntrgt.classList.contains('btn-tam')){
-                    let op = this.oper.value;
+                    
                     let tamanho = document.querySelector('.sel');
                     this.alocaTamVet(tamanho.value);
-                    //operacoes[op](tamanho.value);
+                    //
                     
+                }
+                if(evntrgt.classList.contains('btn-calc')){
+                    let op = this.oper.value;
+                    let tamanho = document.querySelector('.sel');
+                    operacoes[op](tamanho.value,op);
                 }
             });
         },
