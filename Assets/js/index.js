@@ -5,7 +5,7 @@ function criaCalculadora() {
         inicia() {
             operacoes = [
                 this.normavet,
-                this.prodVet
+                this.prodEsc
             ];
             this.eventos(operacoes);
         },
@@ -80,29 +80,42 @@ function criaCalculadora() {
             v = document.querySelector('.entrada');
             vetores = v.querySelectorAll('input');
             let vets = new Array();
-            console.log(vetores);
+            console.log(vetores + ' oi');
+            console.log(tamanho/2)
             let v1 = new Array();
             let v2 = new Array();
-            for(i=0;i<tamanho/2;i++){
-                console.log(vetores[i].value);
-                //let num = vetores[i];
-                //v1.push(num.value);
+            for(i=0;i<tamanho;i++){
+              
+                let num = vetores[i];
+                v1.push(num.value);
             }
+            
             vets.push(v1);
-            for(i=tamanho/2;i<tamanho;i++){
-                console.log(vetores[i].value);
-              //  let num = vetores[i];
-               // v2.push(num.value);
+
+            for(i=tamanho;i<tamanho*2;i++){
+                let num = vetores[i];
+                v2.push(num.value);
             }
             vets.push(v2);
             return vets;
         },
-        normavet(tamanho,op,vets) {
-            console.log(vets);            
+        normavet(tamanho,vets) {
         },
-        prodVet(tamanho,op,vets) {
-            console.log(vets);
+        prodEsc(tamanho,vets) {
+            let soma = 0;
+            let passos = new String;
+            for (let i = 0; i < tamanho; i++) {
+                i != 0 ? passos+= ' + ' : passos +='√( ';
+                passos += (vets[0][i]*vets[1][i])**2 +' '
+                soma += (vets[0][i]*vets[1][i])**2;
+            }
+            passos += ')';
+            console.log(passos);
+            console.log('√' + soma);
+            let resp = document.createElement('t');
+            resp.innerText = passos + '\n' + 'O produto escalar de ( ' + vets[0] + ') e (' + vets[1] + ') = ' + '√' + soma + ' = ' + Math.sqrt(soma).toFixed(3) + '\n'; 
             
+            return resp;
         },
         
         eventos(operacoes) {
@@ -115,7 +128,7 @@ function criaCalculadora() {
                     let tamanho = document.querySelector('.tam-list');
                     
                     let vets = (this.pegaVet(tamanho.value));
-                    operacoes[op](tamanho.value,op,vets);
+                    this.form.appendChild( operacoes[op](tamanho.value,vets));
                 }
             });
             this.form.addEventListener('change', (e)=>{
