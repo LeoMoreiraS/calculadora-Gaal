@@ -36,7 +36,7 @@ function criaCalculadora() {
                 this.tamanhoVet();
             }
         },
-        alocaTamVet(tamanho){
+        alocaTamVet(tamanho,op){
             
             let tam =this.form.querySelector(".tam");
             let existe = tam.querySelector('.entrada');
@@ -55,11 +55,13 @@ function criaCalculadora() {
                     entrada.appendChild(vet1);
                 }
                 //vetor 2
+                if(op!=0){
                 entrada.appendChild(brk);
-                for(i=0;i<tamanho;i++){
-                    let vet2 = document.createElement('input');
-                    vet2.name = parseInt(tamanho)+i;
-                    entrada.appendChild(vet2);
+                    for(i=0;i<tamanho;i++){
+                        let vet2 = document.createElement('input');
+                        vet2.name = parseInt(tamanho)+i;
+                        entrada.appendChild(vet2);
+                    }
                 }
                 //botao de calculo
                 let butao = document.createElement('button');
@@ -76,30 +78,38 @@ function criaCalculadora() {
 
             
         },
-        pegaVet(tamanho){
+        pegaVet(tamanho,op){
             v = document.querySelector('.entrada');
             vetores = v.querySelectorAll('input');
             let vets = new Array();
             console.log(vetores + ' oi');
             console.log(tamanho/2)
             let v1 = new Array();
-            let v2 = new Array();
             for(i=0;i<tamanho;i++){
-              
+                
                 let num = vetores[i];
                 v1.push(num.value);
             }
             
             vets.push(v1);
-
-            for(i=tamanho;i<tamanho*2;i++){
-                let num = vetores[i];
-                v2.push(num.value);
+            if(op>= 1){
+                let v2 = new Array();
+                for(i=tamanho;i<tamanho*2;i++){
+                    let num = vetores[i];
+                    v2.push(num.value);
+                }
+                vets.push(v2);
             }
-            vets.push(v2);
             return vets;
         },
         normavet(tamanho,vets) {
+            let norma=0;
+            vets[0].forEach((v)=>{
+                norma+=v*v;
+            })
+            let resp = document.createElement('t');
+            resp.innerText =Math.sqrt(norma) + "\n";
+            return resp
         },
         prodEsc(tamanho,vets) {
             let soma = 0;
@@ -142,7 +152,7 @@ function criaCalculadora() {
                 if (evntrgt.classList.contains('tam-list')) {
                         let tamanho = document.querySelector('.tam-list');
                         console.log(tamanho.value);
-                        this.alocaTamVet(tamanho.value);
+                        this.alocaTamVet(tamanho.value,this.oper.value);
                 }
             });
 
