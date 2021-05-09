@@ -55,7 +55,7 @@ function criaCalculadora() {
                     entrada.appendChild(vet1);
                 }
                 //vetor 2
-                if(op!=0){
+                if(op>=1){
                 entrada.appendChild(brk);
                     for(i=0;i<tamanho;i++){
                         let vet2 = document.createElement('input');
@@ -150,9 +150,11 @@ function criaCalculadora() {
                     }
                 }
                 if (evntrgt.classList.contains('tam-list')) {
+                        let op = this.oper.value;
+                        console.log(op)
                         let tamanho = document.querySelector('.tam-list');
                         console.log(tamanho.value);
-                        this.alocaTamVet(tamanho.value,this.oper.value);
+                        this.alocaTamVet(tamanho.value,op);
                 }
             });
 
